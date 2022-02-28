@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Stats de classes</title>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="js/d3.min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <style type="text/css">
+            .artistCount{
+                float: right;
+                background-color: #006493;
+                text-align: right;
+                color: whitesmoke;
+                font-size: small;
+            }
+            .artist{
+                height: 1.1em;
+                display: table;
+                width: 400px;
+            }
+            .artistName{
+                font-size: small;
+                display: table-cell;
+            }
+        </style>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="champions.html">Artistes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="classes.html">Instruments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Tonalités</a>
+            </li>
+        </ul>
+        <div> 
+            <button onclick="sortByCount()">Sort by count</button>
+        </div>
+        <div id="content" style="float:clear"></div>
+    </body>
+
+    <script>
+        let instruments;
+        let sortCount = "down";
+
+        function sortByCount() {
+            if (sortCount == "down") {
+                instruments.sort((a, b) => d3.ascending(a.Count, b.Count));
+                sortCount = "up";
+            } else {
+                instruments.sort((a, b) => d3.descending(a.Count, b.Count));
+                sortCount = "down";
+            }
+            console.log(instruments)
+
+            d3
+                    .select("#content")
+                    .selectAll("div")
+                    .data(instruments, d => d.Count)
+                    .order()
+        }
+
+        function drawInstruments(root) {
+            //console.log(root.data.instruments)
+            instruments = root.data.types
+
+            d3
+                    .select("#content")
+                    .selectAll("div")
+                    .data(instruments)
+                    .join("div")
+                    .attr("class", "artist")
+                    .append("img")
+                    .attr("class", "artistName")
+                    .attr("height", 75)
+                    .attr("src", d => "img/" + d.Name + ".png")//.substring(0, 20))
+
+            d3.selectAll(".artist")
+                    .append("div")
+                    .attr("class", "artistCount")
+                    .style("width", d => Math.log(d.Count) + "em")
+                    .text(d => d.Count)
+
+        }
+
+        d3.json("http://127.0.0.1:4000/?query={types{Name Count}}").then(drawInstruments)
+    </script>
+</html>

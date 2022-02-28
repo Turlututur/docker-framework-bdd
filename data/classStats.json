@@ -1,0 +1,24 @@
+{
+    "classes": [
+        {
+            "Name": "Mage",
+            "Count": 62
+        },
+        {
+            "Name": "Fighter",
+            "Count" : 70
+        },
+        {
+            "Name": "Tank",
+            "Count": 29
+        },
+        {
+            "Name": "Assassin",
+            "Count": 26
+        },
+        {
+            "Name": "Marksman",
+            "Count": 32
+        }
+    ]
+}

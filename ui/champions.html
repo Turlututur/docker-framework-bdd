@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Champions et WinRate</title>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="js/d3.min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <style type="text/css">
+            .artistCount{
+                float: right;
+                background-color: #006493;
+                text-align: right;
+                color: whitesmoke;
+                font-size: small;
+            }
+            .artist{
+                height: 1.1em;
+                display: table;
+                width: 400px;
+            }
+            .Name{
+                font-size: small;
+                display: table-cell;
+            }
+        </style>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="champions.html">Champions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="classes.html">Classes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Tonalités</a>
+            </li>
+        </ul>
+        <div> 
+            <button onclick="sortByName()">Sort by name</button>
+            <button onclick="sortByCount()">Sort by WinRate</button>
+        </div>
+        <div id="content" style="float:clear"></div>
+    </body>
+
+    <script>
+        let champions;
+        let sortCount = "down";
+        let sortName = "down";
+
+        function floatToInt(num) {
+            num = num.toString()
+            num = num.split(".");
+            num = num[0]+num[1];
+            num = parseInt(num)
+            return num
+        }
+        console.log(floatToInt("11.03"));   
+        
+
+        function sortByCount() {
+            if (sortCount == "down") {
+                champions.sort((a, b) => d3.ascending(parseFloat(a.WinRate), parseFloat(b.WinRate)));
+                sortCount = "up";
+            } else {
+                champions.sort((a, b) => d3.ascending(parseFloat(a.WinRate), parseFloat(b.WinRate)));
+                sortCount = "down";
+            }
+            console.log(champions)
+            d3
+                    .select("#content")
+                    .selectAll("div")
+                    .data(champions, d => d.Name)
+                    .order()
+        }
+
+        function sortByName() {
+            if (sortName == "down") {
+                champions.sort((a, b) => d3.ascending(a.Name, b.Name));
+                sortName = "up";
+            } else {
+                champions.sort((a, b) => d3.descending(a.Name, b.Name));
+                sortName = "down";
+            }
+            console.log(champions)
+            d3
+                    .select("#content")
+                    .selectAll("div")
+                    .data(champions, d => d.Name)
+                    .order()
+        }
+
+        // function lastName(name) {
+        //     let shortName = name.substring(0, 20)
+        //     return shortName.substring(shortName.lastIndexOf(' ') + 1)
+        // }
+
+
+        function drawchampions(root) {
+            //console.log(root.data.stats)
+            champions = root.data.stats
+
+            d3
+                    .select("#content")
+                    .selectAll("div")
+                    .data(champions)
+                    .join("div")
+                    .attr("class", "artist")
+                    .append("div")
+                    .attr("class", "Name")
+                    .text(d => d.Name + " " + d.Role)
+
+            d3.selectAll(".artist")
+                    .append("div")
+                    .attr("class", "artistCount")
+                    .style("width", d => Math.log(d.WinRate) + "em")
+                    .text(d => d.WinRate + " %")
+
+        }
+
+        d3.json("http://127.0.0.1:4000/?query={stats{Name Role WinRate}}").then(drawchampions)
+    </script>
+</html>

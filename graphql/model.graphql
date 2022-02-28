@@ -1,0 +1,25 @@
+scalar JSON
+
+type Stats {
+    Name: String
+    Class: String
+    Role: String
+    Tier: String
+    Score: Float
+    Trend: Float
+    WinRate: String
+    RolePercent: String
+    PickRate: String
+    BanRate: String
+    KDA: Float
+}
+
+type Types {
+    Name: String
+    Count: Int
+}
+
+type Query {
+    stats: [Stats]
+    types: [types]
+}
