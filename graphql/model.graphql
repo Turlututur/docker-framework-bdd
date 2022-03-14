@@ -14,12 +14,12 @@ type Stats {
     KDA: Float
 }
 
-type Types {
+type Classes {
     Name: String
     Count: Int
 }
 
 type Query {
     stats: [Stats]
-    types: [types]
+    classes: [Classes]
 }

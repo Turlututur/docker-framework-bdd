@@ -51,10 +51,10 @@ const resolvers = {
                 return result
             });
         },
-        types(root, args, context) {
+        classes(root, args, context) {
             return new Promise((resolve, reject) => {
                 const db = client.db(dbName);
-                findDocuments(db, 'types', {}, resolve);
+                findDocuments(db, 'classes', {}, resolve);
             }).then(result => {
                 return result
             });

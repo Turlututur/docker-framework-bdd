@@ -40,7 +40,7 @@ and open the template in the editor.
                 <a class="nav-link" href="champions.html">Artistes</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="classes.html">Instruments</a>
+                <a class="nav-link active" href="classes.html">Classes</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Tonalités</a>
@@ -53,34 +53,34 @@ and open the template in the editor.
     </body>
 
     <script>
-        let instruments;
+        let classes;
         let sortCount = "down";
 
         function sortByCount() {
             if (sortCount == "down") {
-                instruments.sort((a, b) => d3.ascending(a.Count, b.Count));
+                classes.sort((a, b) => d3.ascending(a.Count, b.Count));
                 sortCount = "up";
             } else {
-                instruments.sort((a, b) => d3.descending(a.Count, b.Count));
+                classes.sort((a, b) => d3.descending(a.Count, b.Count));
                 sortCount = "down";
             }
-            console.log(instruments)
+            console.log(classes)
 
             d3
                     .select("#content")
                     .selectAll("div")
-                    .data(instruments, d => d.Count)
+                    .data(classes, d => d.Count)
                     .order()
         }
 
-        function drawInstruments(root) {
-            //console.log(root.data.instruments)
-            instruments = root.data.types
+        function drawclasses(root) {
+            //console.log(root.data.classes)
+            classes = root.data.classes
 
             d3
                     .select("#content")
                     .selectAll("div")
-                    .data(instruments)
+                    .data(classes)
                     .join("div")
                     .attr("class", "artist")
                     .append("img")
@@ -96,6 +96,6 @@ and open the template in the editor.
 
         }
 
-        d3.json("http://127.0.0.1:4000/?query={types{Name Count}}").then(drawInstruments)
+        d3.json("http://127.0.0.1:4000/?query={classes{Name Count}}").then(drawclasses)
     </script>
 </html>

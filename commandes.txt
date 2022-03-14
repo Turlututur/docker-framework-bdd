@@ -1,0 +1,26 @@
+démarrer les containers :
+    $ docker-compose -f stack.yml up -d
+entrer dans le container
+    $ docker exec -it mongo-dev bash
+se connecter au serveur :
+    # mongo --authenticationDatabase admin -u root -p example
+arrêter les containers :
+    $ docker-compose -f stack.yml down
+
+
+Depuis la machine hôte, si l'on dispose d'un client de connexion MongoDB et si l'on connaît l'adresse du serveur,
+ on peut également s'y connecter :
+
+mongo --authenticationDatabase admin 172.18.0.3/cfp -u root -p example
+Pour connaître l'adresse du serveur :
+
+$ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mongo-dev
+On peut exécuter une requête :
+
+docker exec mongo-dev bash -c 'echo "db.post.find()" | mongo --quiet --authenticationDatabase admin -u root -p example cfp'
+ou un fichier :
+
+docker exec -i mongo-dev sh -c 'mongo --quiet --authenticationDatabase admin -u root -p example cfp' < query.js
+Enfin on peut importer :
+
+docker exec -i mongo-dev sh -c 'mongoimport -d cfp -c post --authenticationDatabase admin -u root -p example' < post.json
