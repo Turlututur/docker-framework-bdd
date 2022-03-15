@@ -9,22 +9,20 @@ and open the template in the editor.
         <title>Champions et WinRate</title>
         <meta charset="UTF-8">
         <script type="text/javascript" src="js/d3.min.js"></script>
-        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://bootswatch.com/5/quartz/bootstrap.min.css"/>
         <style type="text/css">
-            .artistCount{
+            .WinRate{
                 float: right;
-                background-color: #006493;
+                background-color: #820093;
                 text-align: right;
                 color: whitesmoke;
-                font-size: small;
             }
-            .artist{
+            .champion{
                 height: 1.1em;
                 display: table;
                 width: 400px;
             }
             .Name{
-                font-size: small;
                 display: table-cell;
             }
         </style>
@@ -32,25 +30,29 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">Accueil</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="champions.html">Champions</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="classes.html">Classes</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Tonalités</a>
-            </li>
-        </ul>
-        <div> 
-            <button onclick="sortByName()">Sort by name</button>
-            <button onclick="sortByCount()">Sort by WinRate</button>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="champions.html">Champions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="classes.html">Classes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">todo</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container"> 
+            <button class="btn btn-primary" onclick="sortByName()">Sort by name</button>
+            <button class="btn btn-primary" onclick="sortByCount()">Sort by WinRate</button>
         </div>
-        <div id="content" style="float:clear"></div>
+        <div class="container" id="content" style="float:clear"></div>
     </body>
 
     <script>
@@ -100,6 +102,21 @@ and open the template in the editor.
                     .order()
         }
 
+        function onMouseOver(event, d) {
+                d3.select(this)
+                        .append('text')
+                        .text('toto')
+                        .attr('class', 'name-rollover')
+                        .text(' Classé Tiers ' + d.Tier)
+            }
+
+            function onMouseOut(event, d) {
+                d3.select(this)
+                        .selectAll('text')
+                         .remove();
+            }
+
+
         // function lastName(name) {
         //     let shortName = name.substring(0, 20)
         //     return shortName.substring(shortName.lastIndexOf(' ') + 1)
@@ -115,19 +132,22 @@ and open the template in the editor.
                     .selectAll("div")
                     .data(champions)
                     .join("div")
-                    .attr("class", "artist")
+                    .attr("class", "champion")
                     .append("div")
                     .attr("class", "Name")
                     .text(d => d.Name + " " + d.Role)
+                    .on('mouseover', onMouseOver)
+                    .on('mouseout', onMouseOut)
+                    
 
-            d3.selectAll(".artist")
+            d3.selectAll(".champion")
                     .append("div")
-                    .attr("class", "artistCount")
-                    .style("width", d => Math.log(d.WinRate) + "em")
+                    .attr("class", "WinRate")
+                    .style("width", d => Math.log(d.WinRate)**1.5 + "em")
                     .text(d => d.WinRate + " %")
 
         }
 
-        d3.json("http://127.0.0.1:4000/?query={stats{Name Role WinRate}}").then(drawchampions)
+        d3.json("http://127.0.0.1:4000/?query={stats{Name Role WinRate Tier}}").then(drawchampions)
     </script>
 </html>
