@@ -9,45 +9,31 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <script type="text/javascript" src="js/d3.min.js"></script>
-        <link rel="stylesheet" href="css/bootstrap.min.css"/>
-        <style type="text/css">
-            .artistCount{
-                float: right;
-                background-color: #00933C;
-                text-align: right;
-                color: whitesmoke;
-                font-size: small;
-            }
-            .artist{
-                height: 1.1em;
-                display: table;
-                width: 400px;
-            }
-            .artistName{
-                font-size: small;
-                display: table-cell;
-            }
-        </style>
+        <link rel="stylesheet" href="https://bootswatch.com/5/quartz/bootstrap.min.css"/>
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link active" href="index.html">Accueil</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="champions.html">Champions</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="classes.html">Instruments</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Tonalités</a>
-            </li>
-        </ul>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="champions.html">Champions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="classes.html">Classes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="bubbles.html">Bubbles</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
         <section id="content">
-            <div id="d3-content">
+            <div class="container" id="d3-content">
                 <p>Pr&eacute;sentation de donn&eacute;es de 
                     bibliographie&nbsp;: des auteurs publient conjointement 
                     &agrave; des conf&eacute;rences. </p>

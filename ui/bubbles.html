@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Champions et WinRate</title>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="js/d3.min.js"></script>
+        <link rel="stylesheet" href="https://bootswatch.com/5/quartz/bootstrap.min.css"/>
+        <style type="text/css">
+            .WinRate{
+                float: right;
+                background-color: #820093;
+                text-align: right;
+                color: whitesmoke;
+            }
+            .champion{
+                height: 1.1em;
+                display: table;
+                width: 700px;
+            }
+            .Name{
+                display: table-cell;
+            }
+        </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="champions.html">Champions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="classes.html">Classes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="bubbles.html">Bubbles</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+        <!-- <div class="container"> 
+            <h1>Affichage des champions et de leur WinRate</h1>
+            <p>Au survol, la note globale du champion est affichée</p>
+            <button class="btn btn-primary" onclick="sortByName()">Classer en fonction du nom</button>
+            <button class="btn btn-primary" onclick="sortByCount()">Classer en fcontion du WinRate</button>
+        </div> -->
+        <div class="container" id="content" style="float:clear"></div>
+    </body>
+
+    <script type="module">
+
+    import define from "./js/index.js";
+    import {Runtime, Library, Inspector} from "./js/runtime.js";
+
+    const runtime = new Runtime();
+    const main = runtime.module(define, Inspector.into(document.body));
+
+        
+
+        d3.json("http://127.0.0.1:4000/?query={}")//.then(drawchampions)
+    </script>
+</html>
