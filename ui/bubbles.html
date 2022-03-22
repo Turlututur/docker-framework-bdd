@@ -33,12 +33,10 @@ and open the template in the editor.
             </div>
         </nav>
         
-        <!-- <div class="container"> 
-            <h1>Affichage des champions et de leur WinRate</h1>
-            <p>Au survol, la note globale du champion est affichée</p>
-            <button class="btn btn-primary" onclick="sortByName()">Classer en fonction du nom</button>
-            <button class="btn btn-primary" onclick="sortByCount()">Classer en fcontion du WinRate</button>
-        </div> -->
+        <div class="container"> 
+            <h1>Les champions en ronds !</h1>
+            <p>Les ADC en vert, les TOP en orange, les MID en b violet, les SUP en jaune et les JUNGLE en bleu !</p>
+        </div>
         <div class="container" id="content" style="float:clear">
             <script>
 
@@ -92,10 +90,14 @@ and open the template in the editor.
                 
 
 
-                force = d3.layout.force()
+                forceADC = d3.layout.force()
                     .nodes(nodesADC)
-                    // .nodes(nodesTOP)
-                    // .nodes(nodesMID)
+                    .size([width, height])
+                    .on("tick", tick)
+                    .start();
+
+                forceTOP = d3.layout.force()
+                    .nodes(nodesTOP)
                     .size([width, height])
                     .on("tick", tick)
                     .start();
@@ -117,35 +119,22 @@ and open the template in the editor.
                     .attr("cy", function(d) { return d.y; })
                     .attr("r", 8)
                     .style("fill", "#A6FF00")
-                    .style("stroke", function(d, i) { return d3.rgb(fill(i & 3)).darker(2); })
-                    .call(force.drag)
-                    .on("mousedown", function() { d3.event.stopPropagation(); })
-    
-                //     .data(nodesTOP)
-                // .enter().append("circle")
-                //     .attr("class", "nodeTOP")
-                //     .attr("cx", function(d) { return d.x; })
-                //     .attr("cy", function(d) { return d.y; })
-                //     .attr("r", 8)
-                //     .style("fill", "#FF9300")
-                //     .style("stroke", function(d, i) { return d3.rgb(fill(i & 3)).darker(2); })
-                //     .call(force.drag)
-                //     .on("mousedown", function() { d3.event.stopPropagation(); });
+                    .call(forceADC.drag)
+                    .on("mousedown", function() { d3.event.stopPropagation(); });
 
                 //TOP
-                // nodeTOP = svg.select(".node")
-                //     .data(nodesTOP)
-                // .enter().append("circle")
-                //     .attr("class", "nodeTOP")
-                //     .attr("cx", function(d) { return d.x; })
-                //     .attr("cy", function(d) { return d.y; })
-                //     .attr("r", 8)
-                //     .style("fill", "#FF9300")
-                //     .style("stroke", function(d, i) { return d3.rgb(fill(i & 3)).darker(2); })
-                //     .call(force.drag)
-                //     .on("mousedown", function() { d3.event.stopPropagation(); });
+                nodeTOP = svg.selectAll(".node")
+                    .data(nodesTOP)
+                .enter().append("circle")
+                    .attr("class", "nodeTOP")
+                    .attr("cx", function(d) { return d.x; })
+                    .attr("cy", function(d) { return d.y; })
+                    .attr("r", 8)
+                    .style("fill", "#FF9300")
+                    .call(forceTOP.drag)
+                    .on("mousedown", function() { d3.event.stopPropagation(); });
 
-                // //MID
+                //MID
                 // nodeMID = svg.selectAll(".node")
                 //     .data(nodesMID)
                 // .enter().append("circle")
@@ -154,7 +143,6 @@ and open the template in the editor.
                 //     .attr("cy", function(d) { return d.y; })
                 //     .attr("r", 8)
                 //     .style("fill", "#8F00FF")
-                //     .style("stroke", function(d, i) { return d3.rgb(fill(i & 3)).darker(2); })
                 //     .call(force.drag)
                 //     .on("mousedown", function() { d3.event.stopPropagation(); });
 
@@ -174,17 +162,17 @@ and open the template in the editor.
 
                 function tick(e) {
                 // Push different nodes in different directions for clustering.
-                // var k = 6 * e.alpha;
-                // nodesADC.forEach(function(o, i) {
-                //     o.y += i & 1 ? k : -k;
-                //     o.x += i & 2 ? k : -k;
-                // });
+                var k = 6 * e.alpha;
+                nodesADC.forEach(function(o, i) {
+                    o.y += 30 & 1 ? k : -k;
+                    o.x += 30 & 2 ? k : -k;
+                });
                 
 
                 nodeADC.attr("cx", function(d) { return d.x; })
                     .attr("cy", function(d) { return d.y; });
-                // nodeTOP.attr("cx", function(d) { return d.x; })
-                //     .attr("cy", function(d) { return d.y; });
+                nodeTOP.attr("cx", function(d) { return d.x; })
+                    .attr("cy", function(d) { return d.y; });
                 // nodeMID.attr("cx", function(d) { return d.x; })
                 //     .attr("cy", function(d) { return d.y; });
                 }
@@ -194,12 +182,13 @@ and open the template in the editor.
                     o.x += (Math.random() - .5) * 40;
                     o.y += (Math.random() - .5) * 40;
                 });
-                // nodesTOP.forEach(function(o, i) {
-                //     o.x += (Math.random() - .5) * 40;
-                //     o.y += (Math.random() - .5) * 40;
-                // });
+                nodesTOP.forEach(function(o, i) {
+                    o.x += (Math.random() - .5) * 40;
+                    o.y += (Math.random() - .5) * 40;
+                });
                 
-                force.resume();
+                forceADC.resume();
+                forceTOP.resume();
                 }
 
 
