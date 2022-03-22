@@ -41,7 +41,7 @@ and open the template in the editor.
         </nav>
         
         <div class="container"> 
-            <h1>Les champions en ronds !</h1>
+            <h1>Les champions représentés sous forme de billes !</h1>
             <p>
                 Les ADC en bleu, les TOP en orange, les MID en violet, les SUP en jaune et les JUNGLE en vert !<br>
                 Mais... Se pourrait-t-il qu'un rôle soit largement moins représenté que les autres ? <br>
@@ -53,6 +53,10 @@ and open the template in the editor.
 
                 
                 function printBubbles(root) {
+
+                /*
+                On récupère les données de chaques type de rôle (ils sont au nombre de 5)
+                */    
                 champions = root.data.stats;
                 adc = [];
                 for (let i = 0; i < champions.length; i++) {
@@ -94,6 +98,10 @@ and open the template in the editor.
 
                 fill = d3.scale.category10();
 
+                /*
+                On crée les noeuds associés au rôles
+                */
+
                 nodesADC = d3.range(adc.length).map(function(i) {
                 return {index: i};
                 })
@@ -115,6 +123,9 @@ and open the template in the editor.
                 })
                 
 
+                /*
+                Force permet de créer une sorte de physique dans un graph
+                */
 
                 forceADC = d3.layout.force()
                     .nodes(nodesADC)
@@ -153,6 +164,10 @@ and open the template in the editor.
                     
 
 
+
+                /*
+                On crée nos circles, un par champion dont la couleur va varier en fonction du role
+                */
 
                 // ADC
                 nodeADC = svg.selectAll(".node")
@@ -239,23 +254,24 @@ and open the template in the editor.
                 }
 
                 function tick(e) {
-                var k = 3 * e.alpha;
+                var k = 4 * e.alpha;
                 nodesADC.forEach(function(o, i) {
-                    o.y += 1 & 1 ? k : -k;
-                    o.x += 1 & 2 ? k : -k;
+                    o.y += 3 & 1 ? k : -k;
+                    o.x += 3 & 2 ? k : -k;
                 });
                 nodesTOP.forEach(function(o, i) {
                     o.y += 2 & 1 ? k : -k;
                     o.x += 2 & 2 ? k : -k;
                 });
                 nodesMID.forEach(function(o, i) {
-                    o.y += 3 & 1 ? k : -k;
-                    o.x += 3 & 2 ? k : -k;
+                    o.y += 1 & 1 ? k : -k;
+                    o.x += 1 & 2 ? k : -k;
                 });
                 nodesSUP.forEach(function(o, i) {
                     o.y += 4 & 1 ? k : -k;
                     o.x += 4 & 2 ? k : -k;
                 });
+                
                 
 
                 nodeADC.attr("cx", function(d) { return d.x; })
@@ -268,29 +284,34 @@ and open the template in the editor.
                     .attr("cy", function(d) { return d.y; });
                 nodeJNGL.attr("cx", function(d) { return d.x; })
                     .attr("cy", function(d) { return d.y; });
-
+                
+                forceADC.resume();
+                forceTOP.resume();
+                forceMID.resume();
+                forceSUP.resume();
+                forceJNGL.resume();
                 }
 
                 function mousedown() {
                 nodesADC.forEach(function(o, i) {
-                    o.x += (Math.random() - .5) * 20;
-                    o.y += (Math.random() - .5) * 20;
+                    o.x += (Math.random() - .5) * 50;
+                    o.y += (Math.random() - .5) * 50;
                 });
                 nodesTOP.forEach(function(o, i) {
-                    o.x += (Math.random() - .5) * 20;
-                    o.y += (Math.random() - .5) * 20;
+                    o.x += (Math.random() - .5) * 50;
+                    o.y += (Math.random() - .5) * 50;
                 });
                 nodesMID.forEach(function(o, i) {
-                    o.x += (Math.random() - .5) * 20;
-                    o.y += (Math.random() - .5) * 20;
+                    o.x += (Math.random() - .5) * 50;
+                    o.y += (Math.random() - .5) * 50;
                 });
                 nodesSUP.forEach(function(o, i) {
-                    o.x += (Math.random() - .5) * 20;
-                    o.y += (Math.random() - .5) * 20;
+                    o.x += (Math.random() - .5) * 50;
+                    o.y += (Math.random() - .5) * 50;
                 });
                 nodesJNGL.forEach(function(o, i) {
-                    o.x += (Math.random() - .5) * 20;
-                    o.y += (Math.random() - .5) * 20;
+                    o.x += (Math.random() - .5) * 50;
+                    o.y += (Math.random() - .5) * 50;
                 });
                 
                 forceADC.resume();
