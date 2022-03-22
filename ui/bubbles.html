@@ -8,24 +8,8 @@ and open the template in the editor.
     <head>
         <title>Champions et WinRate</title>
         <meta charset="UTF-8">
-        <script type="text/javascript" src="js/d3.min.js"></script>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
         <link rel="stylesheet" href="https://bootswatch.com/5/quartz/bootstrap.min.css"/>
-        <style type="text/css">
-            .WinRate{
-                float: right;
-                background-color: #820093;
-                text-align: right;
-                color: whitesmoke;
-            }
-            .champion{
-                height: 1.1em;
-                display: table;
-                width: 700px;
-            }
-            .Name{
-                display: table-cell;
-            }
-        </style>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -55,19 +39,172 @@ and open the template in the editor.
             <button class="btn btn-primary" onclick="sortByName()">Classer en fonction du nom</button>
             <button class="btn btn-primary" onclick="sortByCount()">Classer en fcontion du WinRate</button>
         </div> -->
-        <div class="container" id="content" style="float:clear"></div>
+        <div class="container" id="content" style="float:clear">
+            <script>
+
+                
+                function printBubbles(root) {
+                champions = root.data.stats;
+                adc = [];
+                for (let i = 0; i < champions.length; i++) {
+                    if (champions[i].Role == "ADC") {
+                        adc.push(champions[i])
+                    }
+                }
+
+                toplaner = [];
+                for (let i = 0; i < champions.length; i++) {
+                    if (champions[i].Role == "TOP") {
+                        toplaner.push(champions[i])
+                    }
+                }
+                mid = [];
+                for (let i = 0; i < champions.length; i++) {
+                    if (champions[i].Role == "MID") {
+                        mid.push(champions[i])
+                    }
+                }
+                sup = [];
+                for (let i = 0; i < champions.length; i++) {
+                    if (champions[i].Role == "SUPPORT") {
+                        sup.push(champions[i])
+                    }
+                }
+
+                //Main
+
+                width = 960 * 1.5;
+                height = 500 * 1.5;
+
+                fill = d3.scale.category10();
+
+                nodesADC = d3.range(adc.length).map(function(i) {
+                return {index: i};
+                })
+
+                nodesTOP = d3.range(toplaner.length).map(function(i) {
+                return {index: i};
+                })
+
+                nodesMID = d3.range(10).map(function(i) {
+                return {index: i};
+                })
+                
+
+
+                force = d3.layout.force()
+                    .nodes(nodesADC)
+                    // .nodes(nodesTOP)
+                    // .nodes(nodesMID)
+                    .size([width, height])
+                    .on("tick", tick)
+                    .start();
+
+
+                svg = d3.select("body").append("svg")
+                    .attr("width", width)
+                    .attr("height", height);
+                    
+
+
+
+                //ADC
+                nodeADC = svg.selectAll(".node")
+                    .data(nodesADC)
+                .enter().append("circle")
+                    .attr("class", "nodeADC")
+                    .attr("cx", function(d) { return d.x; })
+                    .attr("cy", function(d) { return d.y; })
+                    .attr("r", 8)
+                    .style("fill", "#A6FF00")
+                    .style("stroke", function(d, i) { return d3.rgb(fill(i & 3)).darker(2); })
+                    .call(force.drag)
+                    .on("mousedown", function() { d3.event.stopPropagation(); })
+    
+                //     .data(nodesTOP)
+                // .enter().append("circle")
+                //     .attr("class", "nodeTOP")
+                //     .attr("cx", function(d) { return d.x; })
+                //     .attr("cy", function(d) { return d.y; })
+                //     .attr("r", 8)
+                //     .style("fill", "#FF9300")
+                //     .style("stroke", function(d, i) { return d3.rgb(fill(i & 3)).darker(2); })
+                //     .call(force.drag)
+                //     .on("mousedown", function() { d3.event.stopPropagation(); });
+
+                //TOP
+                // nodeTOP = svg.select(".node")
+                //     .data(nodesTOP)
+                // .enter().append("circle")
+                //     .attr("class", "nodeTOP")
+                //     .attr("cx", function(d) { return d.x; })
+                //     .attr("cy", function(d) { return d.y; })
+                //     .attr("r", 8)
+                //     .style("fill", "#FF9300")
+                //     .style("stroke", function(d, i) { return d3.rgb(fill(i & 3)).darker(2); })
+                //     .call(force.drag)
+                //     .on("mousedown", function() { d3.event.stopPropagation(); });
+
+                // //MID
+                // nodeMID = svg.selectAll(".node")
+                //     .data(nodesMID)
+                // .enter().append("circle")
+                //     .attr("class", "node")
+                //     .attr("cx", function(d) { return d.x; })
+                //     .attr("cy", function(d) { return d.y; })
+                //     .attr("r", 8)
+                //     .style("fill", "#8F00FF")
+                //     .style("stroke", function(d, i) { return d3.rgb(fill(i & 3)).darker(2); })
+                //     .call(force.drag)
+                //     .on("mousedown", function() { d3.event.stopPropagation(); });
+
+
+
+                svg.style("opacity", 1e-6)
+                .transition()
+                    .duration(1000)
+                    .style("opacity", 1);
+
+                d3.select("body")
+                    .on("mousedown", mousedown);
+
+
+
+                }
+
+                function tick(e) {
+                // Push different nodes in different directions for clustering.
+                // var k = 6 * e.alpha;
+                // nodesADC.forEach(function(o, i) {
+                //     o.y += i & 1 ? k : -k;
+                //     o.x += i & 2 ? k : -k;
+                // });
+                
+
+                nodeADC.attr("cx", function(d) { return d.x; })
+                    .attr("cy", function(d) { return d.y; });
+                // nodeTOP.attr("cx", function(d) { return d.x; })
+                //     .attr("cy", function(d) { return d.y; });
+                // nodeMID.attr("cx", function(d) { return d.x; })
+                //     .attr("cy", function(d) { return d.y; });
+                }
+
+                function mousedown() {
+                nodesADC.forEach(function(o, i) {
+                    o.x += (Math.random() - .5) * 40;
+                    o.y += (Math.random() - .5) * 40;
+                });
+                // nodesTOP.forEach(function(o, i) {
+                //     o.x += (Math.random() - .5) * 40;
+                //     o.y += (Math.random() - .5) * 40;
+                // });
+                
+                force.resume();
+                }
+
+
+                d3.json("http://127.0.0.1:4000/?query={stats{Name Role}}", printBubbles)
+            </script>
     </body>
-
-    <script type="module">
-
-    import define from "./js/index.js";
-    import {Runtime, Library, Inspector} from "./js/bubbles/runtime.js";
-
-    const runtime = new Runtime();
-    const main = runtime.module(define, Inspector.into(document.body));
-
-        
-
-        d3.json("http://127.0.0.1:4000/?query={}")//.then(drawchampions)
-    </script>
+    
 </html>
