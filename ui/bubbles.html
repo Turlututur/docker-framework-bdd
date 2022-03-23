@@ -58,11 +58,13 @@ and open the template in the editor.
                 On récupère les données de chaques type de rôle (ils sont au nombre de 5)
                 */    
                 champions = root.data.stats;
-                adc = [];
-                toplaner = [];
-                mid = [];
-                sup = [];
-                jngl = [];
+
+                adc         = [];
+                toplaner    = [];
+                mid         = [];
+                sup         = [];
+                jngl        = [];
+
                 for (let i = 0; i < champions.length; i++) {
                     if (champions[i].Role == "ADC") {
                         adc.push(champions[i])
@@ -81,8 +83,8 @@ and open the template in the editor.
 
                 //Main
 
-                width = 960 * 1.5;
-                height = 500 * 1.5;
+                width = 1440;
+                height = 750;
 
                 fill = d3.scale.category10();
 
