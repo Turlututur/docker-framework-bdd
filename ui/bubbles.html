@@ -59,37 +59,25 @@ and open the template in the editor.
                 */    
                 champions = root.data.stats;
                 adc = [];
+                toplaner = [];
+                mid = [];
+                sup = [];
+                jngl = [];
                 for (let i = 0; i < champions.length; i++) {
                     if (champions[i].Role == "ADC") {
                         adc.push(champions[i])
-                    }
-                }
-
-                toplaner = [];
-                for (let i = 0; i < champions.length; i++) {
-                    if (champions[i].Role == "TOP") {
+                    } else if (champions[i].Role == "TOP") {
                         toplaner.push(champions[i])
-                    }
-                }
-                mid = [];
-                for (let i = 0; i < champions.length; i++) {
-                    if (champions[i].Role == "MID") {
+                    } else if (champions[i].Role == "MID") {
                         mid.push(champions[i])
-                    }
-                }
-                sup = [];
-                for (let i = 0; i < champions.length; i++) {
-                    if (champions[i].Role == "SUPPORT") {
+                    } else if (champions[i].Role == "SUPPORT") {
                         sup.push(champions[i])
-                    }
-                }
-
-                jngl = [];
-                for (let i = 0; i < champions.length; i++) {
-                    if (champions[i].Role == "JUNGLE") {
+                    } else if (champions[i].Role == "JUNGLE") {
                         jngl.push(champions[i])
                     }
                 }
+              
+
 
                 //Main
 
