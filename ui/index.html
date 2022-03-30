@@ -1,12 +1,7 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Accueil</title>
         <meta charset="UTF-8">
         <script type="text/javascript" src="js/d3.min.js"></script>
         <link rel="stylesheet" href="css/bootstrap.min.css"/>
@@ -33,22 +28,36 @@ and open the template in the editor.
         </div>
     </nav>
         <section id="content">
-            <div class="container" id="d3-content">
-                <p>Pr&eacute;sentation de donn&eacute;es de 
-                    bibliographie&nbsp;: des auteurs publient conjointement 
-                    &agrave; des conf&eacute;rences. </p>
-                <p>On cherche &agrave; rendre 
-                    l'information visuellement attractive.</p>
-                <p>Ce framework devrait combiner&nbsp;:</p>
-                <ul><li>une base de donn&eacute;es non traditionnelle fournissant du JSON</li>
-                    <li>un serveur Nodejs avec socket.io pour servir les données</li>
-                    <li>une visualisation de donn&eacute;es générée côté client avec D3.js</li>
+            <div class="container">
+                <h1>Visualisation des données des champions de League of Legends</h1>
+                <p>
+                    Le but de cette application est d'avoir une représentation des données des champions du jeu League Of Legends™, dans le but de comparer 
+                    la fréquence d'apparition de certaines de leurs caractéristiques mais aussi de 
+                    les classer par ordre de pourcentage de victoire ou encore d manière générale du meilleur au moins bon (bien que cela soit subjectif).
+                </p>
+                <h2>Quelques précisions importantes pour comprendre les données !</h2>
+                <p>League Of Legends est un jeu complexe pour qui n'y est pas initié et il peut parfois être compliqué
+                    d'en comprendre tous les termes, voici une liste des termes auquels vous serez confrontés avec une explication
+                    afin que vous puissiez être à même d'en comprendre le contenu.
+                </p>
+                <ul>
+                    <li>
+                        Champions : les personnages que le joueur incarne.
+                    </li>
+                    <li>
+                        Rôle : le poste que le champion occupe (ils sont au nombre de 5, sans entrer dans les détails)
+                    </li>
+                    <li>
+                        WinRate : le pourcentage de victoire du champion.
+                    </li>
+                    <li>
+                        Classe : la catégorie dans laquelle se situe le champion (combatant, mage, assassin tank ou encore tireur).
+                    </li>
                 </ul>
-                <p>Dans cette version, les données sont des fichiers JSON 
-                    statiques hébergés sur le serveur&nbsp: plus besoin de serveur
-                    Nodejs ni de gestionnaire de base de données.</p>
+                <p><br>Pour plus d'informations vous pouvez toujours lire les bases, sur le site officiel du jeu (attention, ce n'est absolument pas une invitation à y jouer).</p>
+                    <a href="https://www.leagueoflegends.com/fr-fr/how-to-play/#:~:text=League%20of%20Legends%20est%20un,ennemies%20pour%20d%C3%A9crocher%20la%20victoire." 
+                    target="_blank" type="button" class="btn btn-primary">Bases du jeu</a>
             </div>
-            <div id="nconf"></div>
         </section>
    </body>
 
